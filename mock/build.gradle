@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':api')
+    compile 'com.github.tomakehurst:wiremock:2.16.0'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+
+}
