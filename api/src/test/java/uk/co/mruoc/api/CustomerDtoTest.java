@@ -1,12 +1,10 @@
 package uk.co.mruoc.api;
 
 import org.junit.Test;
-import uk.co.mruoc.api.AddressDto.AddressDtoBuilder;
 import uk.co.mruoc.api.CustomerDto.CustomerDtoBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,13 +13,13 @@ public class CustomerDtoTest {
     private final CustomerDtoBuilder builder = new CustomerDtoBuilder();
 
     @Test
-    public void shouldSetEmail() {
-        String email = "michael.ruocco@hotmail.com";
-        builder.setEmail(email);
+    public void shouldSetAccountNumber() {
+        String accountNumber = "1111111111";
+        builder.setAccountNumber(accountNumber);
 
         CustomerDto customer = builder.build();
 
-        assertThat(customer.getEmail()).isEqualTo(email);
+        assertThat(customer.getAccountNumber()).isEqualTo(accountNumber);
     }
 
     @Test

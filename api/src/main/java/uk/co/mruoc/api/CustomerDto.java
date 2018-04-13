@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CustomerDto {
 
-    private String email;
+    private String accountNumber;
     private String firstName;
     private String lastName;
     private List<AddressDto> addresses;
@@ -17,15 +17,15 @@ public class CustomerDto {
     }
 
     public CustomerDto(CustomerDtoBuilder builder) {
-        this.email = builder.email;
+        this.accountNumber = builder.accountNumber;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.addresses = builder.addresses;
     }
 
     @JsonProperty
-    public String getEmail() {
-        return email;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     @JsonProperty
@@ -45,13 +45,13 @@ public class CustomerDto {
 
     public static class CustomerDtoBuilder {
 
-        private String email;
+        private String accountNumber;
         private String firstName;
         private String lastName;
         private List<AddressDto> addresses = new ArrayList<>();
 
-        public CustomerDtoBuilder setEmail(String email) {
-            this.email = email;
+        public CustomerDtoBuilder setAccountNumber(String accountNumber) {
+            this.accountNumber = accountNumber;
             return this;
         }
 

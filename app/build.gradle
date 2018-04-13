@@ -1,0 +1,14 @@
+plugins {
+    id "org.springframework.boot" version "2.0.1.RELEASE"
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':api')
+    compile 'org.springframework.boot:spring-boot-starter-web'
+}
