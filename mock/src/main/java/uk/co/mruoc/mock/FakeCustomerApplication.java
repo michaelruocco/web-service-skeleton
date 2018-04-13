@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import uk.co.mruoc.api.CustomerDto;
+import uk.co.mruoc.api.StubbedCustomer;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -20,13 +21,17 @@ public class FakeCustomerApplication implements AutoCloseable {
         application.start();
     }
 
-    private FakeCustomerApplication(int port) {
+    public FakeCustomerApplication(int port) {
         this(new WireMockConfiguration().port(port));
     }
 
-    private FakeCustomerApplication(WireMockConfiguration configuration) {
+    public FakeCustomerApplication(WireMockConfiguration configuration) {
         server = new WireMockServer(configuration);
         stubFor(new StubbedCustomer());
+    }
+
+    public int getPort() {
+        return server.port();
     }
 
     private void stubFor(CustomerDto customer) {

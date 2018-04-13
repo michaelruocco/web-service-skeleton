@@ -1,10 +1,9 @@
-package uk.co.mruoc.mock;
+package uk.co.mruoc.api;
 
-import uk.co.mruoc.api.AddressDto;
 import uk.co.mruoc.api.AddressDto.AddressDtoBuilder;
-import uk.co.mruoc.api.CustomerDto;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,7 +18,7 @@ public class StubbedCustomer extends CustomerDto {
     }
 
     private static List<AddressDto> buildAddresses() {
-        return Arrays.asList(new AddressDtoBuilder()
+        return Collections.singletonList(new AddressDtoBuilder()
                 .setLine1("20 Tiffany Gardens")
                 .setLine2("Hunsbury")
                 .setTown("Northampton")
