@@ -1,5 +1,7 @@
 package uk.co.mruoc.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class CustomerNotFoundErrorDto extends ErrorDto {
 
     private static final String MESSAGE = "customer with account number %s not found";
@@ -11,6 +13,7 @@ public class CustomerNotFoundErrorDto extends ErrorDto {
         this.accountNumber = accountNumber;
     }
 
+    @JsonIgnore
     public String getAccountNumber() {
         return accountNumber;
     }
