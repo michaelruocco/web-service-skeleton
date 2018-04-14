@@ -1,7 +1,16 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.3'
+}
+
 dependencies {
     compile project(':api')
     compile 'com.github.tomakehurst:wiremock:2.16.0'
     compile 'org.slf4j:slf4j-simple:1.7.25'
 
     testCompile 'com.github.michaelruocco:http-client:4.0.4'
+}
+
+shadowJar {
+    mainClassName = 'uk.co.mruoc.mock.Main'
 }
