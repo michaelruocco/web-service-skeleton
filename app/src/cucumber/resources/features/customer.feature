@@ -7,10 +7,11 @@ Feature: Customer
     And response contains property "accountNumber" with value "<accountNumber>"
     And response contains property "firstName" with value "<firstName>"
     And response contains property "lastName" with value "<lastName>"
+    And response contains an array "addresses" of size <numberOfAddresses>
 
     Examples:
-      | accountNumber | firstName | lastName |
-      | 1111111111    | Joe       | Bloggs   |
+      | accountNumber | firstName | lastName | numberOfAddresses |
+      | 1111111111    | Joe       | Bloggs   | 1                 |
 
   Scenario Outline: Get customer not found
     Given let variable "accountNumber" equal to "<accountNumber>"
