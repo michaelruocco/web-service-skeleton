@@ -4,16 +4,14 @@ import org.junit.rules.ExternalResource;
 
 public class FakeCustomerApplicationRule extends ExternalResource {
 
-    private static final int DEFAULT_PORT = 8080;
-
     private final FakeCustomerApplication application;
 
     public FakeCustomerApplicationRule() {
-        this(DEFAULT_PORT);
+        this(new FakeCustomerApplication());
     }
 
-    public FakeCustomerApplicationRule(int port) {
-        this.application = new FakeCustomerApplication(port);
+    private FakeCustomerApplicationRule(FakeCustomerApplication application) {
+        this.application = application;
     }
 
     public int getPort() {

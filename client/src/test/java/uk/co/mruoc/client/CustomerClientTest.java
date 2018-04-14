@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
-import uk.co.mruoc.api.StubbedCustomer;
+import uk.co.mruoc.api.StubbedCustomerDto;
 import uk.co.mruoc.mock.FakeCustomerApplicationRule;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +27,7 @@ public class CustomerClientTest {
 
         CustomerDto customer = client.getCustomer(accountNumber);
 
-        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomer());
+        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto());
     }
 
 }

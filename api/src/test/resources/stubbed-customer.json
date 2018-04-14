@@ -1,0 +1,15 @@
+{
+  "accountNumber": "1111111111",
+  "firstName": "Joe",
+  "lastName": "Bloggs",
+  "addresses": [
+    {
+      "line1": "20 Seasame Street",
+      "line2": "",
+      "town": "Northampton",
+      "county": "Northamptonshire",
+      "postcode": "NN4 0TJ",
+      "country": "en_GB"
+    }
+  ]
+}

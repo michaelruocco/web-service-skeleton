@@ -52,23 +52,22 @@ public class AddressDtoTest {
     }
 
     @Test
-    public void shouldSetPostCode() {
-        String postCode = "NN4 0TJ";
-        builder.setPostCode(postCode);
+    public void shouldSetPostcode() {
+        String postcode = "NN4 0TJ";
+        builder.setPostcode(postcode);
 
         AddressDto address = builder.build();
 
-        assertThat(address.getPostCode()).isEqualTo(postCode);
+        assertThat(address.getPostcode()).isEqualTo(postcode);
     }
 
     @Test
     public void shouldSetCountry() {
-        String country = Locale.UK.getISO3Country();
-        builder.setCountry(country);
+        builder.setCountry(Locale.UK);
 
         AddressDto address = builder.build();
 
-        assertThat(address.getCountry()).isEqualTo(country);
+        assertThat(address.getCountry()).isEqualTo(Locale.UK);
     }
 
     @Test

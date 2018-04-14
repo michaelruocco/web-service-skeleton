@@ -1,16 +1,16 @@
 package uk.co.mruoc.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import uk.co.mruoc.api.CustomerDto;
+import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
 
-import java.io.IOException;
 
 public class CustomerClient {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
+
     private final HttpClient httpClient;
     private final String baseUrl;
 
@@ -26,15 +26,7 @@ public class CustomerClient {
     public CustomerDto getCustomer(String accountNumber) {
         String url = String.format("%s/customers/%s", baseUrl, accountNumber);
         Response response = httpClient.get(url);
-        return toCustomer(response.getBody());
-    }
-
-    private CustomerDto toCustomer(String json) {
-        try {
-            return objectMapper.readValue(json, CustomerDto.class);
-        } catch (IOException e) {
-            throw new CustomerClientException(e);
-        }
+        return customerConverter.toCustomer(response.getBody());
     }
 
 }

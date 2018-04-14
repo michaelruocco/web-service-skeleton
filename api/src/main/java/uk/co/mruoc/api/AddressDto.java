@@ -2,14 +2,16 @@ package uk.co.mruoc.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Locale;
+
 public class AddressDto {
 
     private String line1;
     private String line2;
     private String town;
     private String county;
-    private String postCode;
-    private String country;
+    private String postcode;
+    private Locale country;
 
     public AddressDto() {
         // required by jackson
@@ -20,7 +22,7 @@ public class AddressDto {
         this.line2 = builder.line2;
         this.town = builder.town;
         this.county = builder.county;
-        this.postCode = builder.postCode;
+        this.postcode = builder.postcode;
         this.country = builder.country;
     }
 
@@ -45,12 +47,12 @@ public class AddressDto {
     }
 
     @JsonProperty
-    public String getPostCode() {
-        return postCode;
+    public String getPostcode() {
+        return postcode;
     }
 
     @JsonProperty
-    public String getCountry() {
+    public Locale getCountry() {
         return country;
     }
 
@@ -60,8 +62,8 @@ public class AddressDto {
         private String line2;
         private String town;
         private String county;
-        private String postCode;
-        private String country;
+        private String postcode;
+        private Locale country;
 
         public AddressDtoBuilder setLine1(String line1) {
             this.line1 = line1;
@@ -83,12 +85,12 @@ public class AddressDto {
             return this;
         }
 
-        public AddressDtoBuilder setPostCode(String postCode) {
-            this.postCode = postCode;
+        public AddressDtoBuilder setPostcode(String postcode) {
+            this.postcode = postcode;
             return this;
         }
 
-        public AddressDtoBuilder setCountry(String country) {
+        public AddressDtoBuilder setCountry(Locale country) {
             this.country = country;
             return this;
         }

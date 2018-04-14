@@ -1,11 +1,10 @@
 package uk.co.mruoc.mock;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import uk.co.mruoc.api.CustomerDto;
-import uk.co.mruoc.api.StubbedCustomer;
+import uk.co.mruoc.api.CustomerDtoConverter;
+import uk.co.mruoc.api.StubbedCustomerDto;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -13,21 +12,17 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 public class FakeCustomerApplication implements AutoCloseable {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
+
     private final WireMockServer server;
 
-    public static void main(String[] args) {
-        FakeCustomerApplication application = new FakeCustomerApplication(8080);
-        application.start();
-    }
-
-    public FakeCustomerApplication(int port) {
-        this(new WireMockConfiguration().port(port));
+    public FakeCustomerApplication() {
+        this(new WireMockConfiguration().dynamicPort());
     }
 
     public FakeCustomerApplication(WireMockConfiguration configuration) {
         server = new WireMockServer(configuration);
-        stubFor(new StubbedCustomer());
+        stubFor(new StubbedCustomerDto());
     }
 
     public int getPort() {
@@ -40,15 +35,7 @@ public class FakeCustomerApplication implements AutoCloseable {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json;charset=UTF-8")
-                        .withBody(toJson(customer))));
-    }
-
-    private String toJson(Object value) {
-        try {
-            return mapper.writeValueAsString(value);
-        } catch (JsonProcessingException e) {
-            throw new FakeCustomerApplicationException(e);
-        }
+                        .withBody(customerConverter.toJson(customer))));
     }
 
     public void start() {
