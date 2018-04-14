@@ -1,5 +1,7 @@
 plugins {
-    id "org.springframework.boot" version "2.0.1.RELEASE"
+    id 'org.springframework.boot' version '2.0.1.RELEASE'
+    id 'com.github.samueltbrown.cucumber' version '0.9'
+    id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -11,4 +13,13 @@ repositories {
 dependencies {
     compile project(':api')
     compile 'org.springframework.boot:spring-boot-starter-web'
+
+    cucumberCompile 'org.springframework.boot:spring-boot-starter-test'
+    cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.21'
+    cucumberCompile 'info.cukes:cucumber-spring:1.2.5'
+}
+
+cucumber {
+    glueDirs = ['lv.ctco.cukes']
+    featureDirs = ['src/cucumber/resources/features']
 }
