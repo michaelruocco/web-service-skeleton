@@ -7,6 +7,8 @@ import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.StubbedCustomerDto;
 import uk.co.mruoc.mock.FakeCustomerApplicationRule;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomerClientTest {
@@ -25,9 +27,19 @@ public class CustomerClientTest {
     public void shouldReturnCustomer() {
         String accountNumber = "1111111111";
 
-        CustomerDto customer = client.getCustomer(accountNumber);
+        Optional<CustomerDto> customer = client.getCustomer(accountNumber);
 
-        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto());
+        assertThat(customer.isPresent()).isTrue();
+        assertThat(customer.get()).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto());
+    }
+
+    @Test
+    public void shouldNotCustomerIfNotFound() {
+        String accountNumber = "9999999999";
+
+        Optional<CustomerDto> customer = client.getCustomer(accountNumber);
+
+        assertThat(customer.isPresent()).isFalse();
     }
 
 }

@@ -6,11 +6,12 @@ import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
 
+import java.util.Optional;
+
 
 public class CustomerClient {
 
     private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
-
     private final HttpClient httpClient;
     private final String baseUrl;
 
@@ -23,10 +24,13 @@ public class CustomerClient {
         this.httpClient = httpClient;
     }
 
-    public CustomerDto getCustomer(String accountNumber) {
+    public Optional<CustomerDto> getCustomer(String accountNumber) {
         String url = String.format("%s/customers/%s", baseUrl, accountNumber);
         Response response = httpClient.get(url);
-        return customerConverter.toDto(response.getBody());
+        if (response.is2xx()) {
+            return Optional.of(customerConverter.toDto(response.getBody()));
+        }
+        return Optional.empty();
     }
 
 }
