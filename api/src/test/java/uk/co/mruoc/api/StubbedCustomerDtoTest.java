@@ -2,11 +2,13 @@ package uk.co.mruoc.api;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StubbedCustomerDtoTest {
 
-    private final StubbedCustomerDto customer = new StubbedCustomerDto();
+    private final CustomerDto customer = new StubbedCustomerDto();
 
     @Test
     public void shouldReturnAccountNumber() {
@@ -25,7 +27,11 @@ public class StubbedCustomerDtoTest {
 
     @Test
     public void shouldReturnAddresses() {
-        assertThat(customer.getAddresses()).usingFieldByFieldElementComparator().contains(new StubbedAddressDto());
+        AddressDto expectedAddress = new StubbedAddressDto();
+
+        List<AddressDto> addresses = customer.getAddresses();
+
+        assertThat(addresses).usingFieldByFieldElementComparator().contains(expectedAddress);
     }
 
 }

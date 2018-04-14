@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class StubbedAddressDtoTest {
 
-    private final StubbedAddressDto address = new StubbedAddressDto();
+    private final AddressDto address = new StubbedAddressDto();
 
     @Test
     public void shouldReturnLine1() {
