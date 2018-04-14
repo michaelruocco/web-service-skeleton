@@ -26,7 +26,7 @@ public class CustomerClient {
     public CustomerDto getCustomer(String accountNumber) {
         String url = String.format("%s/customers/%s", baseUrl, accountNumber);
         Response response = httpClient.get(url);
-        return customerConverter.toCustomer(response.getBody());
+        return customerConverter.toDto(response.getBody());
     }
 
 }

@@ -8,27 +8,27 @@ import uk.co.mruoc.properties.FileContentLoader;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class CustomerDtoConverterTest {
+public class ErrorDtoConverterTest {
 
     private final FileContentLoader contentLoader = new ClasspathFileContentLoader();
-    private final CustomerDtoConverter converter = new CustomerDtoConverter();
+    private final ErrorDtoConverter converter = new ErrorDtoConverter();
 
-    private final String customerJson = contentLoader.loadContent("/stubbed-customer.json");
+    private final String errorJson = contentLoader.loadContent("/customer-not-found.json");
 
     @Test
     public void shouldConvertJsonToObject() {
-        CustomerDto customer = converter.toDto(customerJson);
+        ErrorDto error = converter.toDto(errorJson);
 
-        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto());
+        assertThat(error).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerNotFoundErrorDto());
     }
 
     @Test
     public void shouldConvertObjectToJson() {
-        CustomerDto customer = new StubbedCustomerDto();
+        ErrorDto error = new StubbedCustomerNotFoundErrorDto();
 
-        String json = converter.toJson(customer);
+        String json = converter.toJson(error);
 
-        assertThat(json).isEqualToIgnoringWhitespace(customerJson);
+        assertThat(json).isEqualToIgnoringWhitespace(errorJson);
     }
 
     @Test

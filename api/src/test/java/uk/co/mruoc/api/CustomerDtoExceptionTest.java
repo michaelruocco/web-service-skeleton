@@ -10,7 +10,7 @@ public class CustomerDtoExceptionTest {
     public void shouldReturnCause() {
         Throwable cause = new Exception();
 
-        CustomerDtoException exception = new CustomerDtoException(cause);
+        Throwable exception = new CustomerDtoException(cause);
 
         assertThat(exception.getCause()).isEqualTo(cause);
     }

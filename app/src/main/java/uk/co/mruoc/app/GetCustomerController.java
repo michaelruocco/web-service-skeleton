@@ -14,9 +14,17 @@ public class GetCustomerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetCustomerController.class);
 
+    private static final String NOT_FOUND_ACCOUNT_NUMBER = "9999999999";
+
     @RequestMapping(value = "/customers/{accountNumber}", method = RequestMethod.GET)
     public CustomerDto getCustomer(@PathVariable String accountNumber) {
         LOGGER.info("get customer with account number " + accountNumber);
+
+        if (NOT_FOUND_ACCOUNT_NUMBER.equals(accountNumber)) {
+            LOGGER.info(String.format("customer with account number %s not found", accountNumber));
+            throw new CustomerNotFoundException(accountNumber);
+        }
+
         return new StubbedCustomerDto();
     }
 

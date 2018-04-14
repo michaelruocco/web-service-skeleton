@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.SocketUtils;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Optional;
 
 @RunWith(Cucumber.class)
@@ -17,6 +18,7 @@ import java.util.Optional;
         features = {"classpath:features"},
         glue = "lv.ctco.cukes"
 )
+@Singleton
 public class CukesTest implements CukesPlugin {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CukesTest.class);
@@ -53,8 +55,6 @@ public class CukesTest implements CukesPlugin {
         if (baseUri == null) {
             baseUri = initialise();
         }
-        LOGGER.info(String.format("setting cukes rest base uri %s", baseUri));
-        requestFacade.baseUri(baseUri);
     }
 
     @Override
@@ -64,7 +64,8 @@ public class CukesTest implements CukesPlugin {
 
     @Override
     public void beforeScenario() {
-        // intentionally blank
+        LOGGER.info(String.format("setting cukes rest base uri %s", baseUri));
+        requestFacade.baseUri(baseUri);
     }
 
     @Override

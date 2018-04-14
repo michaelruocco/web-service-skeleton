@@ -12,13 +12,12 @@ Feature: Customer
       | accountNumber | firstName | lastName |
       | 1111111111    | Joe       | Bloggs   |
 
-#  Scenario Outline: Get customer not found
-#    Given let variable "accountNumber" equal to "<accountNumber>"
-#    When the client performs GET request on "customers/{(accountNumber)}"
-#    Then status code is 404
-#    And response contains property "error" with value "account with number {(accountNumber)} not found"
-#
-#    Examples:
-#      | accountNumber |
-#      | 12345678      |
-#      | 99999999      |
+  Scenario Outline: Get customer not found
+    Given let variable "accountNumber" equal to "<accountNumber>"
+    When the client performs GET request on "customers/{(accountNumber)}"
+    Then status code is 404
+    And response contains property "message" with value "customer with account number {(accountNumber)} not found"
+
+    Examples:
+      | accountNumber |
+      | 9999999999    |
