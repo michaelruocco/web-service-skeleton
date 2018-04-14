@@ -11,7 +11,15 @@ import java.util.Optional;
 @RestController
 public class GetCustomerController {
 
-    private final CustomerFacade facade = new DefaultCustomerFacade();
+    private final CustomerFacade facade;
+
+    public GetCustomerController() {
+        this(new DefaultCustomerFacade());
+    }
+
+    public GetCustomerController(CustomerFacade facade) {
+        this.facade = facade;
+    }
 
     @RequestMapping(value = "/customers/{accountNumber}", method = RequestMethod.GET)
     public CustomerDto getCustomer(@PathVariable String accountNumber) {

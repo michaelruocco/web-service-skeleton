@@ -4,31 +4,39 @@ import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.StubbedCustomerDto;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 public class GetCustomerControllerTest {
 
-    private final GetCustomerController controller = new GetCustomerController();
-    private final CustomerDto stubbedCustomer = new StubbedCustomerDto();
+    private final CustomerFacade facade = mock(CustomerFacade.class);
+    private final CustomerDto customer = new StubbedCustomerDto();
+
+    private final GetCustomerController controller = new GetCustomerController(facade);
 
     @Test
     public void shouldReturnStubbedCustomer() {
-        CustomerDto customer = controller.getCustomer(stubbedCustomer.getAccountNumber());
+        given(facade.getCustomer(customer.getAccountNumber())).willReturn(Optional.of(customer));
 
-        assertThat(customer).isEqualToComparingFieldByFieldRecursively(stubbedCustomer);
+        CustomerDto customer = controller.getCustomer(this.customer.getAccountNumber());
+
+        assertThat(customer).isEqualTo(this.customer);
     }
 
     @Test
     public void shouldThrowCustomerNotFoundException() {
-        String accountNumber = "9999999999";
+        given(facade.getCustomer(customer.getAccountNumber())).willReturn(Optional.empty());
 
-        Throwable thrown = catchThrowable(() -> controller.getCustomer(accountNumber));
+        Throwable thrown = catchThrowable(() -> controller.getCustomer(customer.getAccountNumber()));
 
         assertThat(thrown)
                 .isInstanceOf(CustomerNotFoundException.class)
                 .hasNoCause()
-                .hasMessage(accountNumber);
+                .hasMessage(customer.getAccountNumber());
     }
 
 }

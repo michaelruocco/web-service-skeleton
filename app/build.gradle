@@ -14,6 +14,8 @@ dependencies {
     compile project(':api')
     compile 'org.springframework.boot:spring-boot-starter-web'
 
+    testCompile 'org.mockito:mockito-all:1.10.19'
+
     cucumberCompile 'org.springframework.boot:spring-boot-starter-test'
     cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.21'
     cucumberCompile 'info.cukes:cucumber-spring:1.2.5'
