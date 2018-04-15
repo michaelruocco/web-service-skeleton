@@ -1,4 +1,4 @@
-package uk.co.mruoc.app;
+package uk.co.mruoc.app.facade;
 
 import uk.co.mruoc.api.CustomerDto;
 

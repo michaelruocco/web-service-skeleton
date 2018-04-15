@@ -1,4 +1,4 @@
-package uk.co.mruoc.app;
+package uk.co.mruoc.app.controllers;
 
 public class CustomerNotFoundException extends RuntimeException {
 

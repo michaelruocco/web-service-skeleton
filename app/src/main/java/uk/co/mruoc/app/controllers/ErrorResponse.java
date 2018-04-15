@@ -1,4 +1,4 @@
-package uk.co.mruoc.app;
+package uk.co.mruoc.app.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

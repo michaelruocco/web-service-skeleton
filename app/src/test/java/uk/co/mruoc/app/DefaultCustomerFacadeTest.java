@@ -3,6 +3,8 @@ package uk.co.mruoc.app;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
+import uk.co.mruoc.app.facade.CustomerFacade;
+import uk.co.mruoc.app.facade.DefaultCustomerFacade;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package uk.co.mruoc.app;
+package uk.co.mruoc.app.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
