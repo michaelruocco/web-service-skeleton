@@ -5,10 +5,9 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.CustomerNotFoundErrorDto;
-import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.ErrorDtoConverter;
-import uk.co.mruoc.api.StubbedCustomerDto;
-import uk.co.mruoc.api.StubbedCustomerNotFoundErrorDto;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
+import uk.co.mruoc.api.examples.StubbedCustomerNotFoundErrorDto1;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -27,8 +26,8 @@ public class FakeCustomerApplication implements AutoCloseable {
 
     public FakeCustomerApplication(WireMockConfiguration configuration) {
         server = new WireMockServer(configuration);
-        stubFor(new StubbedCustomerDto());
-        stubError(new StubbedCustomerNotFoundErrorDto());
+        stubFor(new StubbedCustomerDto1());
+        stubError(new StubbedCustomerNotFoundErrorDto1());
     }
 
     public int getPort() {

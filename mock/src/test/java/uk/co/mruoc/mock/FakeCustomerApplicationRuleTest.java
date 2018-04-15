@@ -3,7 +3,7 @@ package uk.co.mruoc.mock;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDtoConverter;
-import uk.co.mruoc.api.StubbedCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.http.client.HttpClient;
 import uk.co.mruoc.http.client.Response;
 import uk.co.mruoc.http.client.SimpleHttpClient;
@@ -15,7 +15,7 @@ public class FakeCustomerApplicationRuleTest {
     @Rule
     public FakeCustomerApplicationRule applicationRule = new FakeCustomerApplicationRule();
 
-    private final StubbedCustomerDto customer = new StubbedCustomerDto();
+    private final StubbedCustomerDto1 customer = new StubbedCustomerDto1();
     private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
     private final HttpClient client = new SimpleHttpClient();
 

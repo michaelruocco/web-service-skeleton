@@ -1,14 +1,16 @@
-package uk.co.mruoc.api;
+package uk.co.mruoc.api.examples;
 
 import org.junit.Test;
+import uk.co.mruoc.api.AddressDto;
+import uk.co.mruoc.api.examples.StubbedAddressDto1;
 
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StubbedAddressDtoTest {
+public class StubbedAddressDto1Test {
 
-    private final AddressDto address = new StubbedAddressDto();
+    private final AddressDto address = new StubbedAddressDto1();
 
     @Test
     public void shouldReturnLine1() {

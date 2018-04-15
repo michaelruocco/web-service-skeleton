@@ -2,7 +2,7 @@ package uk.co.mruoc.app;
 
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
-import uk.co.mruoc.api.StubbedCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.mock;
 public class GetCustomerControllerTest {
 
     private final CustomerFacade facade = mock(CustomerFacade.class);
-    private final CustomerDto customer = new StubbedCustomerDto();
+    private final CustomerDto customer = new StubbedCustomerDto1();
 
     private final GetCustomerController controller = new GetCustomerController(facade);
 

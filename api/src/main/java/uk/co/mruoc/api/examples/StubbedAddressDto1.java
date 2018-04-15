@@ -1,10 +1,12 @@
-package uk.co.mruoc.api;
+package uk.co.mruoc.api.examples;
+
+import uk.co.mruoc.api.AddressDto;
 
 import java.util.Locale;
 
-public class StubbedAddressDto extends AddressDto {
+public class StubbedAddressDto1 extends AddressDto {
 
-    public StubbedAddressDto() {
+    public StubbedAddressDto1() {
         super(new AddressDtoBuilder()
                 .setLine1("20 Seasame Street")
                 .setLine2("")

@@ -2,6 +2,7 @@ package uk.co.mruoc.api;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.junit.Test;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.properties.ClasspathFileContentLoader;
 import uk.co.mruoc.properties.FileContentLoader;
 
@@ -19,12 +20,12 @@ public class CustomerDtoConverterTest {
     public void shouldConvertJsonToObject() {
         CustomerDto customer = converter.toDto(customerJson);
 
-        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto());
+        assertThat(customer).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerDto1());
     }
 
     @Test
     public void shouldConvertObjectToJson() {
-        CustomerDto customer = new StubbedCustomerDto();
+        CustomerDto customer = new StubbedCustomerDto1();
 
         String json = converter.toJson(customer);
 

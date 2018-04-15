@@ -1,14 +1,18 @@
-package uk.co.mruoc.api;
+package uk.co.mruoc.api.examples;
 
 import org.junit.Test;
+import uk.co.mruoc.api.AddressDto;
+import uk.co.mruoc.api.CustomerDto;
+import uk.co.mruoc.api.examples.StubbedAddressDto1;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StubbedCustomerDtoTest {
+public class StubbedCustomerDto1Test {
 
-    private final CustomerDto customer = new StubbedCustomerDto();
+    private final CustomerDto customer = new StubbedCustomerDto1();
 
     @Test
     public void shouldReturnAccountNumber() {
@@ -27,7 +31,7 @@ public class StubbedCustomerDtoTest {
 
     @Test
     public void shouldReturnAddresses() {
-        AddressDto expectedAddress = new StubbedAddressDto();
+        AddressDto expectedAddress = new StubbedAddressDto1();
 
         List<AddressDto> addresses = customer.getAddresses();
 

@@ -2,6 +2,7 @@ package uk.co.mruoc.api;
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.junit.Test;
+import uk.co.mruoc.api.examples.StubbedCustomerNotFoundErrorDto1;
 import uk.co.mruoc.properties.ClasspathFileContentLoader;
 import uk.co.mruoc.properties.FileContentLoader;
 
@@ -19,12 +20,12 @@ public class ErrorDtoConverterTest {
     public void shouldConvertJsonToObject() {
         ErrorDto error = converter.toDto(errorJson);
 
-        assertThat(error).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerNotFoundErrorDto());
+        assertThat(error).isEqualToComparingFieldByFieldRecursively(new StubbedCustomerNotFoundErrorDto1());
     }
 
     @Test
     public void shouldConvertObjectToJson() {
-        ErrorDto error = new StubbedCustomerNotFoundErrorDto();
+        ErrorDto error = new StubbedCustomerNotFoundErrorDto1();
 
         String json = converter.toJson(error);
 

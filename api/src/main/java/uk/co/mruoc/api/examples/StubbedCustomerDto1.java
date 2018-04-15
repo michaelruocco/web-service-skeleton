@@ -1,11 +1,14 @@
-package uk.co.mruoc.api;
+package uk.co.mruoc.api.examples;
+
+import uk.co.mruoc.api.AddressDto;
+import uk.co.mruoc.api.CustomerDto;
 
 import java.util.Collections;
 import java.util.List;
 
-public class StubbedCustomerDto extends CustomerDto {
+public class StubbedCustomerDto1 extends CustomerDto {
 
-    public StubbedCustomerDto() {
+    public StubbedCustomerDto1() {
         super(new CustomerDtoBuilder()
                 .setAccountNumber("1111111111")
                 .setFirstName("Joe")
@@ -14,7 +17,7 @@ public class StubbedCustomerDto extends CustomerDto {
     }
 
     private static List<AddressDto> buildAddresses() {
-        return Collections.singletonList(new StubbedAddressDto());
+        return Collections.singletonList(new StubbedAddressDto1());
     }
 
 }

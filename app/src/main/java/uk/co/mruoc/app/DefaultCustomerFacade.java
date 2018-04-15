@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
-import uk.co.mruoc.api.StubbedCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public class DefaultCustomerFacade implements CustomerFacade {
             return Optional.empty();
         }
 
-        CustomerDto customer = new StubbedCustomerDto();
+        CustomerDto customer = new StubbedCustomerDto1();
         LOGGER.info(String.format("returning customer %s", customerConverter.toJson(customer)));
         return Optional.of(customer);
     }

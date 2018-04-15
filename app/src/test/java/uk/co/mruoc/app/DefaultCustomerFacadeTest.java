@@ -2,7 +2,7 @@ package uk.co.mruoc.app;
 
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
-import uk.co.mruoc.api.StubbedCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ public class DefaultCustomerFacadeTest {
     private static final String NOT_FOUND_ACCOUNT_NUMBER = "9999999999";
 
     private final CustomerFacade facade = new DefaultCustomerFacade();
-    private final CustomerDto stubbedCustomer = new StubbedCustomerDto();
+    private final CustomerDto stubbedCustomer = new StubbedCustomerDto1();
 
     @Test
     public void shouldReturnStubbedCustomer() {
