@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerNotFoundErrorDto;
+import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.Regex;
 import uk.co.mruoc.app.facade.CustomerFacade;
 import uk.co.mruoc.app.facade.DefaultCustomerFacade;
@@ -35,6 +36,7 @@ public class GetCustomerController {
     @ApiOperation(value = "View a specific customer specified by account number")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved customer", response = CustomerDto.class),
+            @ApiResponse(code = 400, message = "Invalid account number", response = ErrorDto.class),
             @ApiResponse(code = 404, message = "Customer not found", response = CustomerNotFoundErrorDto.class)
     })
     public CustomerDto getCustomer(@PathVariable @Pattern(regexp = Regex.ACCOUNT_NUMBER) String accountNumber) {

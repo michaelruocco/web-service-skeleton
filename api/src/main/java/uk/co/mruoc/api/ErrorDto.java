@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ErrorDto {
 
-    @ApiModelProperty(example = "customer with account number 9999999999 not found")
+    @ApiModelProperty(example = "error message")
     private String message;
 
     public ErrorDto() {
