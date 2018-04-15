@@ -1,15 +1,22 @@
 package uk.co.mruoc.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDto {
 
+    @ApiModelProperty(example = "1111111111")
     private String accountNumber;
+
+    @ApiModelProperty(example = "Joe")
     private String firstName;
+
+    @ApiModelProperty(example = "Bloggs")
     private String lastName;
+
     private List<AddressDto> addresses;
 
     public CustomerDto() {

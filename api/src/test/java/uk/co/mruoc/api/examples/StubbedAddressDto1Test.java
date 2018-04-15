@@ -2,7 +2,6 @@ package uk.co.mruoc.api.examples;
 
 import org.junit.Test;
 import uk.co.mruoc.api.AddressDto;
-import uk.co.mruoc.api.examples.StubbedAddressDto1;
 
 import java.util.Locale;
 
@@ -39,7 +38,7 @@ public class StubbedAddressDto1Test {
 
     @Test
     public void shouldReturnCountry() {
-        assertThat(address.getCountry()).isEqualTo(Locale.UK);
+        assertThat(address.getCountry()).isEqualTo(Locale.UK.getISO3Country());
     }
 
 }

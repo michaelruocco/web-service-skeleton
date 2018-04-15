@@ -1,7 +1,10 @@
 package uk.co.mruoc.api;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ErrorDto {
 
+    @ApiModelProperty(example = "customer with account number 9999999999 not found")
     private String message;
 
     public ErrorDto() {

@@ -1,17 +1,27 @@
 package uk.co.mruoc.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Locale;
+import io.swagger.annotations.ApiModelProperty;
 
 public class AddressDto {
 
+    @ApiModelProperty(example = "20 Seasame Street")
     private String line1;
+
+    @ApiModelProperty(example = "My district")
     private String line2;
+
+    @ApiModelProperty(example = "Northampton")
     private String town;
+
+    @ApiModelProperty(example = "Northamptonshire")
     private String county;
+
+    @ApiModelProperty(example = "NN4 0TJ")
     private String postcode;
-    private Locale country;
+
+    @ApiModelProperty(example = "GBR")
+    private String country;
 
     public AddressDto() {
         // required by jackson
@@ -52,7 +62,7 @@ public class AddressDto {
     }
 
     @JsonProperty
-    public Locale getCountry() {
+    public String getCountry() {
         return country;
     }
 
@@ -63,7 +73,7 @@ public class AddressDto {
         private String town;
         private String county;
         private String postcode;
-        private Locale country;
+        private String country;
 
         public AddressDtoBuilder setLine1(String line1) {
             this.line1 = line1;
@@ -90,7 +100,7 @@ public class AddressDto {
             return this;
         }
 
-        public AddressDtoBuilder setCountry(Locale country) {
+        public AddressDtoBuilder setCountry(String country) {
             this.country = country;
             return this;
         }

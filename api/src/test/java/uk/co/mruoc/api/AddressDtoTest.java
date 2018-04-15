@@ -63,11 +63,11 @@ public class AddressDtoTest {
 
     @Test
     public void shouldSetCountry() {
-        builder.setCountry(Locale.UK);
+        builder.setCountry(Locale.UK.getISO3Country());
 
         AddressDto address = builder.build();
 
-        assertThat(address.getCountry()).isEqualTo(Locale.UK);
+        assertThat(address.getCountry()).isEqualTo(Locale.UK.getISO3Country());
     }
 
     @Test

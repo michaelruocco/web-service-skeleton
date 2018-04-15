@@ -13,7 +13,7 @@ public class StubbedAddressDto1 extends AddressDto {
                 .setTown("Northampton")
                 .setCounty("Northamptonshire")
                 .setPostcode("NN4 0TJ")
-                .setCountry(Locale.UK));
+                .setCountry(Locale.UK.getISO3Country()));
     }
 
 }
