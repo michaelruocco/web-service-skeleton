@@ -1,4 +1,4 @@
-package uk.co.mruoc.app;
+package uk.co.mruoc.app.controllers;
 
 import org.junit.Test;
 import uk.co.mruoc.app.controllers.CustomerNotFoundException;
