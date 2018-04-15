@@ -2,6 +2,13 @@ package uk.co.mruoc.app;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.IMongodConfig;
+import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.Net;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
 import lv.ctco.cukes.core.extension.CukesPlugin;
 import lv.ctco.cukes.http.facade.HttpRequestFacade;
 import org.junit.runner.RunWith;
@@ -11,6 +18,8 @@ import org.springframework.util.SocketUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Optional;
 
 @RunWith(Cucumber.class)
@@ -25,6 +34,7 @@ public class CukesTest implements CukesPlugin {
 
     private String baseUri;
     private HttpRequestFacade requestFacade;
+    private MongodExecutable mongodExecutable;
 
     @Inject
     public CukesTest(HttpRequestFacade requestFacade) {
@@ -52,6 +62,7 @@ public class CukesTest implements CukesPlugin {
 
     @Override
     public void beforeAllTests() {
+        startMongo();
         if (baseUri == null) {
             baseUri = initialise();
         }
@@ -59,7 +70,7 @@ public class CukesTest implements CukesPlugin {
 
     @Override
     public void afterAllTests() {
-        // intentionally blank
+        stopMongo();
     }
 
     @Override
@@ -71,6 +82,26 @@ public class CukesTest implements CukesPlugin {
     @Override
     public void afterScenario() {
         // intentionally blank
+    }
+
+    private void startMongo() {
+        try {
+            MongodStarter starter = MongodStarter.getDefaultInstance();
+
+            IMongodConfig mongodConfig = new MongodConfigBuilder()
+                    .version(Version.Main.PRODUCTION)
+                    .net(new Net("localhost", 27017, Network.localhostIsIPv6()))
+                    .build();
+
+            mongodExecutable = starter.prepare(mongodConfig);
+            mongodExecutable.start();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    private void stopMongo() {
+        mongodExecutable.stop();
     }
 
 }

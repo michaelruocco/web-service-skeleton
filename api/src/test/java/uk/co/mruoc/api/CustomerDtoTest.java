@@ -70,6 +70,16 @@ public class CustomerDtoTest {
     }
 
     @Test
+    public void shouldReturnSpecificAddress() {
+        AddressDto address = new AddressDto();
+        builder.addAddress(address);
+
+        CustomerDto customer = builder.build();
+
+        assertThat(customer.getAddress(0)).isEqualTo(address);
+    }
+
+    @Test
     public void shouldHaveNoArgumentConstructorForJackson() {
         assertThat(new CustomerDto()).isNotNull();
     }

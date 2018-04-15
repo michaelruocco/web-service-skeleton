@@ -3,8 +3,6 @@ package uk.co.mruoc.app.controllers;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
-import uk.co.mruoc.app.controllers.CustomerNotFoundException;
-import uk.co.mruoc.app.controllers.GetCustomerController;
 import uk.co.mruoc.app.facade.CustomerFacade;
 
 import java.util.Optional;

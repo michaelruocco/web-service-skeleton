@@ -2,32 +2,46 @@ package uk.co.mruoc.app.facade;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
+import uk.co.mruoc.app.model.Customer;
+import uk.co.mruoc.app.model.CustomerConverter;
+import uk.co.mruoc.app.repository.CustomerRepository;
 
 import java.util.Optional;
 
+@Component
 public class DefaultCustomerFacade implements CustomerFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultCustomerFacade.class);
 
-    private static final String NOT_FOUND_ACCOUNT_NUMBER = "9999999999";
+    private final CustomerDtoConverter dtoConverter = new CustomerDtoConverter();
+    private final CustomerConverter modelConverter = new CustomerConverter();
 
-    private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
+    @Autowired
+    private CustomerRepository repository;
+
+    public DefaultCustomerFacade(CustomerRepository repository) {
+        this.repository = repository;
+        repository.save(new Customer(new StubbedCustomerDto1()));
+    }
 
     @Override
     public Optional<CustomerDto> getCustomer(String accountNumber) {
         LOGGER.info("get customer with account number " + accountNumber);
 
-        if (NOT_FOUND_ACCOUNT_NUMBER.equals(accountNumber)) {
+        Customer customer = repository.findByAccountNumber(accountNumber);
+        if (customer == null) {
             LOGGER.info(String.format("customer with account number %s not found", accountNumber));
             return Optional.empty();
         }
 
-        CustomerDto customer = new StubbedCustomerDto1();
-        LOGGER.info(String.format("returning customer %s", customerConverter.toJson(customer)));
-        return Optional.of(customer);
+        CustomerDto dto = modelConverter.toDto(customer);
+        LOGGER.info(String.format("returning customer %s", dtoConverter.toJson(dto)));
+        return Optional.of(dto);
     }
 
 }

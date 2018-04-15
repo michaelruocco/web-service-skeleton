@@ -1,5 +1,6 @@
 package uk.co.mruoc.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -50,6 +51,11 @@ public class CustomerDto {
     @JsonProperty
     public List<AddressDto> getAddresses() {
         return addresses;
+    }
+
+    @JsonIgnore
+    public AddressDto getAddress(int index) {
+        return addresses.get(index);
     }
 
     public static class CustomerDtoBuilder {

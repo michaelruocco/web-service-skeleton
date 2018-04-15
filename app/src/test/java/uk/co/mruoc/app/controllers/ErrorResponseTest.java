@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.ErrorDto.ErrorDtoBuilder;
-import uk.co.mruoc.app.controllers.ErrorResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

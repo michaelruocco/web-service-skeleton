@@ -3,6 +3,7 @@ package uk.co.mruoc.app.controllers;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,6 @@ import uk.co.mruoc.api.CustomerNotFoundErrorDto;
 import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.Regex;
 import uk.co.mruoc.app.facade.CustomerFacade;
-import uk.co.mruoc.app.facade.DefaultCustomerFacade;
 
 import javax.validation.constraints.Pattern;
 import java.util.Optional;
@@ -22,11 +22,8 @@ import java.util.Optional;
 @Validated
 public class GetCustomerController {
 
+    @Autowired
     private final CustomerFacade facade;
-
-    public GetCustomerController() {
-        this(new DefaultCustomerFacade());
-    }
 
     public GetCustomerController(CustomerFacade facade) {
         this.facade = facade;
