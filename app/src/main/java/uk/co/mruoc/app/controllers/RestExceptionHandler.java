@@ -6,7 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uk.co.mruoc.api.CustomerNotFoundErrorDto;
+import uk.co.mruoc.api.ErrorDto;
+import uk.co.mruoc.api.ErrorDto.ErrorDtoBuilder;
 import uk.co.mruoc.api.ErrorDtoConverter;
+
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class RestExceptionHandler {
@@ -16,10 +20,21 @@ public class RestExceptionHandler {
     private final ErrorDtoConverter errorConverter = new ErrorDtoConverter();
 
     @ExceptionHandler(CustomerNotFoundException.class)
-    public ErrorResponse handleNotFound(CustomerNotFoundException e) {
+    public ErrorResponse handle(CustomerNotFoundException e) {
         CustomerNotFoundErrorDto error = new CustomerNotFoundErrorDto(e.getMessage());
         ErrorResponse response = new ErrorResponse(error, HttpStatus.NOT_FOUND);
-        String body = errorConverter.toJson(error);
+        return handle(response);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ErrorResponse handle(ConstraintViolationException e) {
+        ErrorDto error = new ErrorDtoBuilder().setMessage(e.getMessage()).build();
+        ErrorResponse response = new ErrorResponse(error, HttpStatus.BAD_REQUEST);
+        return handle(response);
+    }
+
+    private ErrorResponse handle(ErrorResponse response) {
+        String body = errorConverter.toJson(response.getBody());
         LOGGER.info(String.format("returning error status %d with body %s", response.getStatusCodeValue(), body));
         return response;
     }

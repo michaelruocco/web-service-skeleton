@@ -3,12 +3,14 @@ package uk.co.mruoc.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDto {
 
     @ApiModelProperty(example = "1111111111")
+    @Pattern(regexp = Regex.ACCOUNT_NUMBER)
     private String accountNumber;
 
     @ApiModelProperty(example = "Joe")
