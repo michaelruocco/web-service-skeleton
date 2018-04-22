@@ -2,12 +2,15 @@ package uk.co.mruoc.mock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import uk.co.mruoc.api.AbstractAccountNumberErrorDto;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
-import uk.co.mruoc.api.CustomerNotFoundErrorDto;
 import uk.co.mruoc.api.ErrorDtoConverter;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.api.examples.StubbedCustomerNotFoundErrorDto1;
+import uk.co.mruoc.api.examples.StubbedLongAccountNumberErrorDto;
+import uk.co.mruoc.api.examples.StubbedNonNumericAccountNumberErrorDto;
+import uk.co.mruoc.api.examples.StubbedShortAccountNumberErrorDto;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -28,6 +31,9 @@ public class FakeCustomerApplication implements AutoCloseable {
         server = new WireMockServer(configuration);
         stubFor(new StubbedCustomerDto1());
         stubError(new StubbedCustomerNotFoundErrorDto1());
+        stubError(new StubbedNonNumericAccountNumberErrorDto());
+        stubError(new StubbedShortAccountNumberErrorDto());
+        stubError(new StubbedLongAccountNumberErrorDto());
     }
 
     public int getPort() {
@@ -43,11 +49,11 @@ public class FakeCustomerApplication implements AutoCloseable {
                         .withBody(customerConverter.toJson(customer))));
     }
 
-    private void stubError(CustomerNotFoundErrorDto error) {
+    private void stubError(AbstractAccountNumberErrorDto error) {
         String url = buildUrl(error.getAccountNumber());
         server.stubFor(get(urlEqualTo(url))
                 .willReturn(aResponse()
-                        .withStatus(404)
+                        .withStatus(error.getStatusCode())
                         .withHeader("Content-Type", "application/json;charset=UTF-8")
                         .withBody(errorConverter.toJson(error))));
     }

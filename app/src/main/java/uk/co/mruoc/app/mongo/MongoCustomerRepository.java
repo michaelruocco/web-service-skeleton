@@ -13,7 +13,10 @@ public interface MongoCustomerRepository extends CustomerRepository, MongoReposi
 
     default Optional<Customer> findByAccountNumber(String accountNumber) {
         Optional<MongoCustomer> mongoCustomer = findById(accountNumber);
-        return Optional.of(mongoCustomer.get());
+        if (mongoCustomer.isPresent()) {
+            return Optional.of(mongoCustomer.get());
+        }
+        return Optional.empty();
     }
 
     default Customer create(Customer customer) {

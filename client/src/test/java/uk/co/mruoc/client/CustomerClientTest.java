@@ -34,8 +34,17 @@ public class CustomerClientTest {
     }
 
     @Test
-    public void shouldNotCustomerIfNotFound() {
+    public void shouldNotReturnCustomerIfNotFound() {
         String accountNumber = "9999999999";
+
+        Optional<CustomerDto> customer = client.getCustomer(accountNumber);
+
+        assertThat(customer.isPresent()).isFalse();
+    }
+
+    @Test
+    public void shouldNotReturnCustomerIfInvalidFormatAccountNumber() {
+        String accountNumber = "99999999999";
 
         Optional<CustomerDto> customer = client.getCustomer(accountNumber);
 
