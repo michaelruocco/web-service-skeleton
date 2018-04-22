@@ -9,14 +9,20 @@ import uk.co.mruoc.app.model.CustomerRepository;
 import java.util.Optional;
 
 @Component
-public interface MongoCustomerRepository extends CustomerRepository, MongoRepository<Customer, String> {
+public interface MongoCustomerRepository extends CustomerRepository, MongoRepository<MongoCustomer, String> {
 
     default Optional<Customer> findByAccountNumber(String accountNumber) {
-        return findById(accountNumber);
+        Optional<MongoCustomer> mongoCustomer = findById(accountNumber);
+        return Optional.of(mongoCustomer.get());
     }
 
     default Customer create(Customer customer) {
-        return insert(customer);
+        MongoCustomer mongoCustomer = (MongoCustomer) customer;
+        return insert(mongoCustomer);
+    }
+
+    default boolean exists(String accountNumber) {
+        return existsById(accountNumber);
     }
 
 }

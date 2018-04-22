@@ -8,4 +8,6 @@ public interface CustomerRepository {
 
     Customer create(Customer customer);
 
+    boolean exists(String accountNumber);
+
 }

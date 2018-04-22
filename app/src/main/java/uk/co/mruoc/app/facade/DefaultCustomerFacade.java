@@ -29,7 +29,7 @@ public class DefaultCustomerFacade implements CustomerFacade {
     public DefaultCustomerFacade(CustomerRepository repository, CustomerConverter modelConverter) {
         this.repository = repository;
         this.modelConverter = modelConverter;
-        repository.create(modelConverter.toModel(new StubbedCustomerDto1()));
+        setUpTestData();
     }
 
     @Override
@@ -45,6 +45,14 @@ public class DefaultCustomerFacade implements CustomerFacade {
         CustomerDto dto = modelConverter.toDto(customer.get());
         LOGGER.info(String.format("returning customer %s", dtoConverter.toJson(dto)));
         return Optional.of(dto);
+    }
+
+    //TODO remove once cucumber tests can create customers when post endpoint is implemented
+    private void setUpTestData() {
+        CustomerDto customer = new StubbedCustomerDto1();
+        if (!repository.exists(customer.getAccountNumber())) {
+            repository.create(modelConverter.toModel(customer));
+        }
     }
 
 }
