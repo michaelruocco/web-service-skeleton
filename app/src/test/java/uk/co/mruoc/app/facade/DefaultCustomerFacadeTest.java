@@ -24,7 +24,7 @@ public class DefaultCustomerFacadeTest {
 
     @Test
     public void shouldReturnStubbedCustomer() {
-        given(repository.findByAccountNumber(stubbedCustomer.getAccountNumber())).willReturn(new StubbedMongoCustomer());
+        given(repository.findByAccountNumber(stubbedCustomer.getAccountNumber())).willReturn(Optional.of(new StubbedMongoCustomer()));
 
         Optional<CustomerDto> customer = facade.getCustomer(stubbedCustomer.getAccountNumber());
 
@@ -34,6 +34,8 @@ public class DefaultCustomerFacadeTest {
 
     @Test
     public void shouldNotReturnCustomerIfNotFound() {
+        given(repository.findByAccountNumber(NOT_FOUND_ACCOUNT_NUMBER)).willReturn(Optional.empty());
+
         Optional<CustomerDto> customer = facade.getCustomer(NOT_FOUND_ACCOUNT_NUMBER);
 
         assertThat(customer.isPresent()).isFalse();

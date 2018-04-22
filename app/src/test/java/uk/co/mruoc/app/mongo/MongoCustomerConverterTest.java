@@ -1,14 +1,14 @@
-package uk.co.mruoc.app.model;
+package uk.co.mruoc.app.mongo;
 
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
-import uk.co.mruoc.app.mongo.MongoCustomerConverter;
-import uk.co.mruoc.app.mongo.StubbedMongoCustomer;
+import uk.co.mruoc.app.model.Customer;
+import uk.co.mruoc.app.model.CustomerConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomerConverterTest {
+public class MongoCustomerConverterTest {
 
     private final CustomerConverter converter = new MongoCustomerConverter();
 

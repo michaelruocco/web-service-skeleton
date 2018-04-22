@@ -1,8 +1,10 @@
 package uk.co.mruoc.app.model;
 
+import java.util.Optional;
+
 public interface CustomerRepository {
 
-    Customer findByAccountNumber(String accountNumber);
+    Optional<Customer> findByAccountNumber(String accountNumber);
 
     Customer create(Customer customer);
 

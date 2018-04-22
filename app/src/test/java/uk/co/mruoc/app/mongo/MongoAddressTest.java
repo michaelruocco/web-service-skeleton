@@ -1,11 +1,10 @@
-package uk.co.mruoc.app.model;
+package uk.co.mruoc.app.mongo;
 
 import org.junit.Test;
-import uk.co.mruoc.app.mongo.MongoAddress;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddressTest {
+public class MongoAddressTest {
 
     @Test
     public void hasNoArgConstructorForMongoData() {

@@ -36,13 +36,13 @@ public class DefaultCustomerFacade implements CustomerFacade {
     public Optional<CustomerDto> getCustomer(String accountNumber) {
         LOGGER.info("get customer with account number " + accountNumber);
 
-        Customer customer = repository.findByAccountNumber(accountNumber);
-        if (customer == null) {
+        Optional<Customer> customer = repository.findByAccountNumber(accountNumber);
+        if (!customer.isPresent()) {
             LOGGER.info(String.format("customer with account number %s not found", accountNumber));
             return Optional.empty();
         }
 
-        CustomerDto dto = modelConverter.toDto(customer);
+        CustomerDto dto = modelConverter.toDto(customer.get());
         LOGGER.info(String.format("returning customer %s", dtoConverter.toJson(dto)));
         return Optional.of(dto);
     }

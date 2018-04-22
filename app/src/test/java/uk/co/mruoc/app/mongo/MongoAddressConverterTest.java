@@ -1,18 +1,17 @@
-package uk.co.mruoc.app.model;
+package uk.co.mruoc.app.mongo;
 
 import org.junit.Test;
 import uk.co.mruoc.api.AddressDto;
 import uk.co.mruoc.api.examples.StubbedAddressDto1;
 import uk.co.mruoc.api.examples.StubbedAddressDto2;
-import uk.co.mruoc.app.mongo.MongoAddressConverter;
-import uk.co.mruoc.app.mongo.StubbedMongoAddress;
+import uk.co.mruoc.app.model.Address;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddressConverterTest {
+public class MongoAddressConverterTest {
 
 
     private final MongoAddressConverter converter = new MongoAddressConverter();
