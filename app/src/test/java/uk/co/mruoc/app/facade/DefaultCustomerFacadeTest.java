@@ -3,8 +3,9 @@ package uk.co.mruoc.app.facade;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
-import uk.co.mruoc.app.model.Customer;
-import uk.co.mruoc.app.repository.CustomerRepository;
+import uk.co.mruoc.app.model.CustomerRepository;
+import uk.co.mruoc.app.mongo.MongoCustomerConverter;
+import uk.co.mruoc.app.mongo.StubbedMongoCustomer;
 
 import java.util.Optional;
 
@@ -17,12 +18,13 @@ public class DefaultCustomerFacadeTest {
     private static final String NOT_FOUND_ACCOUNT_NUMBER = "9999999999";
 
     private final CustomerRepository repository = mock(CustomerRepository.class);
-    private final CustomerFacade facade = new DefaultCustomerFacade(repository);
+    private final MongoCustomerConverter modelConverter = new MongoCustomerConverter();
+    private final CustomerFacade facade = new DefaultCustomerFacade(repository, modelConverter);
     private final CustomerDto stubbedCustomer = new StubbedCustomerDto1();
 
     @Test
     public void shouldReturnStubbedCustomer() {
-        given(repository.findByAccountNumber(stubbedCustomer.getAccountNumber())).willReturn(new Customer(stubbedCustomer));
+        given(repository.findByAccountNumber(stubbedCustomer.getAccountNumber())).willReturn(new StubbedMongoCustomer());
 
         Optional<CustomerDto> customer = facade.getCustomer(stubbedCustomer.getAccountNumber());
 

@@ -14,6 +14,7 @@ import uk.co.mruoc.api.CustomerNotFoundErrorDto;
 import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.Regex;
 import uk.co.mruoc.app.facade.CustomerFacade;
+import uk.co.mruoc.app.model.CustomerNotFoundException;
 
 import javax.validation.constraints.Pattern;
 import java.util.Optional;

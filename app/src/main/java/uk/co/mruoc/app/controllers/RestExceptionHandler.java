@@ -9,6 +9,7 @@ import uk.co.mruoc.api.CustomerNotFoundErrorDto;
 import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.ErrorDto.ErrorDtoBuilder;
 import uk.co.mruoc.api.ErrorDtoConverter;
+import uk.co.mruoc.app.model.CustomerNotFoundException;
 
 import javax.validation.ConstraintViolationException;
 

@@ -1,13 +1,14 @@
-package uk.co.mruoc.app.model;
+package uk.co.mruoc.app.mongo;
 
 import org.modelmapper.ModelMapper;
 import uk.co.mruoc.api.AddressDto;
 import uk.co.mruoc.api.AddressDto.AddressDtoBuilder;
+import uk.co.mruoc.app.model.Address;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddressConverter {
+public class MongoAddressConverter {
 
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -16,7 +17,12 @@ public class AddressConverter {
     }
 
     public Address toModel(AddressDto dto) {
-        return new Address(dto);
+        return new MongoAddress(dto.getLine1(),
+                dto.getLine2(),
+                dto.getTown(),
+                dto.getCounty(),
+                dto.getPostcode(),
+                dto.getCountry());
     }
 
     public List<AddressDto> toDtos(List<Address> addresses) {

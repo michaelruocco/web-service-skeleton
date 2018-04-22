@@ -3,12 +3,14 @@ package uk.co.mruoc.app.model;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
+import uk.co.mruoc.app.mongo.MongoCustomerConverter;
+import uk.co.mruoc.app.mongo.StubbedMongoCustomer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomerConverterTest {
 
-    private final CustomerConverter converter = new CustomerConverter();
+    private final CustomerConverter converter = new MongoCustomerConverter();
 
     @Test
     public void shouldConvertDto() {
@@ -21,7 +23,7 @@ public class CustomerConverterTest {
 
     @Test
     public void shouldConvertModel() {
-        Customer customerModel = new Customer(new StubbedCustomerDto1());
+        Customer customerModel = new StubbedMongoCustomer();
 
         CustomerDto customerDto = converter.toDto(customerModel);
 

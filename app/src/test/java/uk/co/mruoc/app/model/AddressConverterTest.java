@@ -4,6 +4,8 @@ import org.junit.Test;
 import uk.co.mruoc.api.AddressDto;
 import uk.co.mruoc.api.examples.StubbedAddressDto1;
 import uk.co.mruoc.api.examples.StubbedAddressDto2;
+import uk.co.mruoc.app.mongo.MongoAddressConverter;
+import uk.co.mruoc.app.mongo.StubbedMongoAddress;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AddressConverterTest {
 
 
-    private final AddressConverter converter = new AddressConverter();
+    private final MongoAddressConverter converter = new MongoAddressConverter();
 
     @Test
     public void shouldConvertDto() {
@@ -39,7 +41,7 @@ public class AddressConverterTest {
 
     @Test
     public void shouldConvertModel() {
-        Address addressModel = new Address(new StubbedAddressDto1());
+        Address addressModel = new StubbedMongoAddress();
 
         AddressDto addressDto = converter.toDto(addressModel);
 

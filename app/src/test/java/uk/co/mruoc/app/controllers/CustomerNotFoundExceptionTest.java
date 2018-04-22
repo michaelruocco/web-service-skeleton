@@ -1,6 +1,7 @@
 package uk.co.mruoc.app.controllers;
 
 import org.junit.Test;
+import uk.co.mruoc.app.model.CustomerNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

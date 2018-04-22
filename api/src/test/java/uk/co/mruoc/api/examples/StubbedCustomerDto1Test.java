@@ -3,8 +3,6 @@ package uk.co.mruoc.api.examples;
 import org.junit.Test;
 import uk.co.mruoc.api.AddressDto;
 import uk.co.mruoc.api.CustomerDto;
-import uk.co.mruoc.api.examples.StubbedAddressDto1;
-import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 
 import java.util.List;
 

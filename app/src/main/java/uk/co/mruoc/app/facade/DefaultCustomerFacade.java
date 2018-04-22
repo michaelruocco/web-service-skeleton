@@ -9,7 +9,7 @@ import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.app.model.Customer;
 import uk.co.mruoc.app.model.CustomerConverter;
-import uk.co.mruoc.app.repository.CustomerRepository;
+import uk.co.mruoc.app.model.CustomerRepository;
 
 import java.util.Optional;
 
@@ -19,14 +19,17 @@ public class DefaultCustomerFacade implements CustomerFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultCustomerFacade.class);
 
     private final CustomerDtoConverter dtoConverter = new CustomerDtoConverter();
-    private final CustomerConverter modelConverter = new CustomerConverter();
+
+    @Autowired
+    private final CustomerConverter modelConverter;
 
     @Autowired
     private CustomerRepository repository;
 
-    public DefaultCustomerFacade(CustomerRepository repository) {
+    public DefaultCustomerFacade(CustomerRepository repository, CustomerConverter modelConverter) {
         this.repository = repository;
-        repository.save(new Customer(new StubbedCustomerDto1()));
+        this.modelConverter = modelConverter;
+        repository.create(modelConverter.toModel(new StubbedCustomerDto1()));
     }
 
     @Override

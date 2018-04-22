@@ -1,9 +1,9 @@
 package uk.co.mruoc.app.controllers;
 
 import org.junit.Test;
+import uk.co.mruoc.app.model.CustomerNotFoundException;
 
 import javax.validation.ConstraintViolationException;
-
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
