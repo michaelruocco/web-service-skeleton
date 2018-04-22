@@ -2,10 +2,15 @@ package uk.co.mruoc.mock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.mruoc.api.AbstractAccountNumberErrorDto;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.ErrorDtoConverter;
+import uk.co.mruoc.api.InvalidAccountNumberFormatErrorDto;
+import uk.co.mruoc.api.examples.StubbedCreateCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCreateFailureCustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.api.examples.StubbedCustomerNotFoundErrorDto1;
 import uk.co.mruoc.api.examples.StubbedLongAccountNumberErrorDto;
@@ -13,10 +18,14 @@ import uk.co.mruoc.api.examples.StubbedNonNumericAccountNumberErrorDto;
 import uk.co.mruoc.api.examples.StubbedShortAccountNumberErrorDto;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 public class FakeCustomerApplication implements AutoCloseable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FakeCustomerApplication.class);
 
     private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
     private final ErrorDtoConverter errorConverter = new ErrorDtoConverter();
@@ -29,18 +38,24 @@ public class FakeCustomerApplication implements AutoCloseable {
 
     public FakeCustomerApplication(WireMockConfiguration configuration) {
         server = new WireMockServer(configuration);
-        stubFor(new StubbedCustomerDto1());
-        stubError(new StubbedCustomerNotFoundErrorDto1());
-        stubError(new StubbedNonNumericAccountNumberErrorDto());
-        stubError(new StubbedShortAccountNumberErrorDto());
-        stubError(new StubbedLongAccountNumberErrorDto());
+
+        stubGetFor(new StubbedCustomerDto1());
+
+        stubGetError(new StubbedCustomerNotFoundErrorDto1());
+        stubGetError(new StubbedNonNumericAccountNumberErrorDto());
+        stubGetError(new StubbedShortAccountNumberErrorDto());
+        stubGetError(new StubbedLongAccountNumberErrorDto());
+
+        stubPostFor(new StubbedCreateCustomerDto());
+
+        stubPostError(new StubbedCreateFailureCustomerDto());
     }
 
     public int getPort() {
         return server.port();
     }
 
-    private void stubFor(CustomerDto customer) {
+    private void stubGetFor(CustomerDto customer) {
         String url = buildUrl(customer.getAccountNumber());
         server.stubFor(get(urlEqualTo(url))
                 .willReturn(aResponse()
@@ -49,13 +64,40 @@ public class FakeCustomerApplication implements AutoCloseable {
                         .withBody(customerConverter.toJson(customer))));
     }
 
-    private void stubError(AbstractAccountNumberErrorDto error) {
+    private void stubGetError(AbstractAccountNumberErrorDto error) {
         String url = buildUrl(error.getAccountNumber());
         server.stubFor(get(urlEqualTo(url))
                 .willReturn(aResponse()
                         .withStatus(error.getStatusCode())
                         .withHeader("Content-Type", "application/json;charset=UTF-8")
                         .withBody(errorConverter.toJson(error))));
+    }
+
+    private void stubPostFor(CustomerDto customer) {
+        String url = buildUrl();
+        String body = customerConverter.toJson(customer);
+        server.stubFor(post(urlEqualTo(url))
+                .withRequestBody(equalToJson(body))
+                .willReturn(aResponse()
+                        .withStatus(201)
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody(body)));
+    }
+
+    private void stubPostError(CustomerDto customer) {
+        String url = buildUrl();
+        String body = customerConverter.toJson(customer);
+        AbstractAccountNumberErrorDto error = new InvalidAccountNumberFormatErrorDto(customer.getAccountNumber());
+        server.stubFor(post(urlEqualTo(url))
+                .withRequestBody(equalToJson(body))
+                .willReturn(aResponse()
+                        .withStatus(error.getStatusCode())
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody(errorConverter.toJson(error))));
+    }
+
+    private String buildUrl() {
+        return "/customers";
     }
 
     private String buildUrl(String accountNumber) {

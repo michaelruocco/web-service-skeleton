@@ -23,9 +23,9 @@ public abstract class DtoConverter<T> {
         }
     }
 
-    public String toJson(T error) {
+    public String toJson(T dto) {
         try {
-            return mapper.writeValueAsString(error);
+            return mapper.writeValueAsString(dto);
         } catch (JsonProcessingException e) {
             throw new CustomerDtoException(e);
         }

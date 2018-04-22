@@ -4,12 +4,15 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.co.mruoc.api.CustomerDto;
+import uk.co.mruoc.api.examples.StubbedCreateCustomerDto;
+import uk.co.mruoc.api.examples.StubbedCreateFailureCustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.mock.FakeCustomerApplicationRule;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class CustomerClientTest {
 
@@ -49,6 +52,26 @@ public class CustomerClientTest {
         Optional<CustomerDto> customer = client.getCustomer(accountNumber);
 
         assertThat(customer.isPresent()).isFalse();
+    }
+
+    @Test
+    public void shouldCreateCustomer() {
+        CustomerDto customer = new StubbedCreateCustomerDto();
+
+        CustomerDto createCustomer = client.createCustomer(customer);
+
+        assertThat(createCustomer).isEqualToComparingFieldByFieldRecursively(customer);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfCreateCustomerFails() {
+        CustomerDto customer = new StubbedCreateFailureCustomerDto();
+
+        Throwable thrown = catchThrowable(() -> client.createCustomer(customer));
+
+        assertThat(thrown).isInstanceOf(CustomerClientException.class)
+                .hasNoCause()
+                .hasMessage("invalid account number, should be 10 digit numeric: 222abc");
     }
 
 }
