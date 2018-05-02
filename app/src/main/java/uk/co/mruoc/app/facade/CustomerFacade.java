@@ -8,4 +8,6 @@ public interface CustomerFacade {
 
     Optional<CustomerDto> getCustomer(String accountNumber);
 
+    CustomerDto createCustomer(CustomerDto customerDto);
+    
 }

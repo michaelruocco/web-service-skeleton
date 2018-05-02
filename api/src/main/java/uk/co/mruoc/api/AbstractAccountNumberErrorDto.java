@@ -4,18 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public abstract class AbstractAccountNumberErrorDto extends ErrorDto {
 
-    private final int statusCode;
     private final String accountNumber;
 
     public AbstractAccountNumberErrorDto(int statusCode, String messageFormat, String accountNumber) {
-        super(new ErrorDtoBuilder().setMessage(String.format(messageFormat, accountNumber)));
-        this.statusCode = statusCode;
+        super(new ErrorDtoBuilder()
+                .setStatusCode(statusCode)
+                .setMessage(String.format(messageFormat, accountNumber)));
         this.accountNumber = accountNumber;
-    }
-
-    @JsonIgnore
-    public int getStatusCode() {
-        return statusCode;
     }
 
     @JsonIgnore

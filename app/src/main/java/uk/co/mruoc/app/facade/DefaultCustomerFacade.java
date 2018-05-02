@@ -8,6 +8,7 @@ import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.app.model.Customer;
+import uk.co.mruoc.app.model.CustomerAlreadyExistsException;
 import uk.co.mruoc.app.model.CustomerConverter;
 import uk.co.mruoc.app.model.CustomerRepository;
 
@@ -45,6 +46,22 @@ public class DefaultCustomerFacade implements CustomerFacade {
         CustomerDto dto = modelConverter.toDto(customer.get());
         LOGGER.info(String.format("returning customer %s", dtoConverter.toJson(dto)));
         return Optional.of(dto);
+    }
+
+    @Override
+    public CustomerDto createCustomer(CustomerDto dto) {
+        LOGGER.info(String.format("creating customer %s", dtoConverter.toJson(dto)));
+
+        String accountNumber = dto.getAccountNumber();
+        Optional<Customer> customer = repository.findByAccountNumber(accountNumber);
+        if (customer.isPresent()) {
+            LOGGER.info(String.format("customer with id %s already exists", accountNumber));
+            throw new CustomerAlreadyExistsException(accountNumber);
+        }
+
+        Customer customerToCreate = modelConverter.toModel(dto);
+        Customer createdCustomer = repository.create(customerToCreate);
+        return modelConverter.toDto(createdCustomer);
     }
 
     //TODO remove once cucumber tests can create customers when post endpoint is implemented

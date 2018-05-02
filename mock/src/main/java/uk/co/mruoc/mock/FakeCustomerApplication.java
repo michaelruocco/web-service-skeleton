@@ -2,8 +2,6 @@ package uk.co.mruoc.mock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.co.mruoc.api.AbstractAccountNumberErrorDto;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
@@ -24,8 +22,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
 public class FakeCustomerApplication implements AutoCloseable {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FakeCustomerApplication.class);
 
     private final CustomerDtoConverter customerConverter = new CustomerDtoConverter();
     private final ErrorDtoConverter errorConverter = new ErrorDtoConverter();

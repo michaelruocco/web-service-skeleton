@@ -1,4 +1,4 @@
-Feature: Customer
+Feature: Get Customer
 
   Scenario Outline: Get customer - success
     Given let variable "accountNumber" equal to "<accountNumber>"

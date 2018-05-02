@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class GetCustomerControllerTest {
+public class GetCustomersControllerTest {
 
     private final CustomerFacade facade = mock(CustomerFacade.class);
     private final CustomerDto customer = new StubbedCustomerDto1();
 
-    private final GetCustomerController controller = new GetCustomerController(facade);
+    private final GetCustomersController controller = new GetCustomersController(facade);
 
     @Test
     public void shouldReturnStubbedCustomer() {

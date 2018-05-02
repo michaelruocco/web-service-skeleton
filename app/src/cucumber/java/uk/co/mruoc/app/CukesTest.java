@@ -50,7 +50,8 @@ public class CukesTest implements CukesPlugin {
     }
 
     private String startApplication() {
-        int port = SocketUtils.findAvailableTcpPort();
+        //int port = SocketUtils.findAvailableTcpPort();
+        int port = 8092;
         return startApplication(port);
     }
 

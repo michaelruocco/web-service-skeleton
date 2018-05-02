@@ -1,3 +1,4 @@
 {
-  "message": "customer with account number 9999999999 not found"
+  "message": "customer with account number 9999999999 not found",
+  "statusCode": 404
 }

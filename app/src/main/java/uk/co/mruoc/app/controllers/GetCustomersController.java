@@ -21,12 +21,12 @@ import java.util.Optional;
 
 @RestController
 @Validated
-public class GetCustomerController {
+public class GetCustomersController {
 
     @Autowired
     private final CustomerFacade facade;
 
-    public GetCustomerController(CustomerFacade facade) {
+    public GetCustomersController(CustomerFacade facade) {
         this.facade = facade;
     }
 

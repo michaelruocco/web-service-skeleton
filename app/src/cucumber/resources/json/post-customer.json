@@ -1,0 +1,15 @@
+{
+  "accountNumber": "22222222",
+  "firstName": "Homer",
+  "lastName": "Simpson",
+  "addresses": [
+    {
+      "line1": "742 Evergreen Terrace",
+      "line2": "",
+      "town": "Springfield",
+      "county": "Massachusetts",
+      "postcode": "01199",
+      "country": "USA"
+    }
+  ]
+}
