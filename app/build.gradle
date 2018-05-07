@@ -37,9 +37,9 @@ dependencies {
 
 def environmentVariables = [:]
 environmentVariables['SERVER_PORT'] = 8095
-environmentVariables['MONGO_DATABASE'] = 'skeleton_db'
 environmentVariables['MONGO_HOST'] = 'localhost'
-environmentVariables['MONGO_PORT'] = 27017
+environmentVariables['MONGO_PORT'] = 27019
+environmentVariables['MONGO_DATABASE'] = 'skeleton-db'
 
 integrationTest.doFirst {
     environmentVariables.each{ key, value ->

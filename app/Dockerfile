@@ -1,5 +1,10 @@
-FROM openjdk:8-jdk-alpine
+FROM anapsix/alpine-java
 
-ADD build/libs/app*.jar app.jar
+ADD build/libs/app*.jar /opt/app.jar
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENV SERVER_PORT 8080
+ENV MONGO_HOST localhost
+ENV MONGO_PORT 27017
+ENV MONGO_DATABASE skeleton_db
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/opt/app.jar"]
