@@ -3,6 +3,7 @@ package uk.co.mruoc.mock;
 import org.junit.Rule;
 import org.junit.Test;
 import uk.co.mruoc.api.AbstractAccountNumberErrorDto;
+import uk.co.mruoc.api.CustomerAlreadyExistsErrorDto;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
 import uk.co.mruoc.api.ErrorDto;
@@ -23,9 +24,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FakeCustomerApplicationRuleTest {
 
+    private static final int OK = 200;
+    private static final int CREATED = 201;
+    private static final int BAD_REQUEST = 400;
+    private static final int CONFLICT = 409;
+
     @Rule
     public FakeCustomerApplicationRule applicationRule = new FakeCustomerApplicationRule();
-
 
     private final HttpClient client = new SimpleHttpClient();
 
@@ -38,28 +43,28 @@ public class FakeCustomerApplicationRuleTest {
         Response response = client.get(url);
 
         CustomerDtoConverter converter = new CustomerDtoConverter();
-        assertThat(response.getStatusCode()).isEqualTo(200);
+        assertThat(response.getStatusCode()).isEqualTo(OK);
         assertThat(response.getBody()).isEqualToIgnoringWhitespace(converter.toJson(customer));
     }
 
     @Test
     public void shouldReturnNotFound() {
-        getTestAccountNumberErrorDto(new StubbedCustomerNotFoundErrorDto1());
+        testAccountNumberErrorDto(new StubbedCustomerNotFoundErrorDto1());
     }
 
     @Test
     public void shouldReturnInvalidAccountNumberIfNonNumeric() {
-        getTestAccountNumberErrorDto(new StubbedNonNumericAccountNumberErrorDto());
+        testAccountNumberErrorDto(new StubbedNonNumericAccountNumberErrorDto());
     }
 
     @Test
     public void shouldReturnInvalidAccountNumberIfShorterThanTenDigits() {
-        getTestAccountNumberErrorDto(new StubbedShortAccountNumberErrorDto());
+        testAccountNumberErrorDto(new StubbedShortAccountNumberErrorDto());
     }
 
     @Test
     public void shouldReturnInvalidAccountNumberIfLongerThanTenDigits() {
-        getTestAccountNumberErrorDto(new StubbedLongAccountNumberErrorDto());
+        testAccountNumberErrorDto(new StubbedLongAccountNumberErrorDto());
     }
 
     @Test
@@ -70,7 +75,7 @@ public class FakeCustomerApplicationRuleTest {
 
         Response response = client.post(url, converter.toJson(customer));
 
-        assertThat(response.getStatusCode()).isEqualTo(201);
+        assertThat(response.getStatusCode()).isEqualTo(CREATED);
         assertThat(response.getBody()).isEqualToIgnoringWhitespace(converter.toJson(customer));
     }
 
@@ -84,12 +89,25 @@ public class FakeCustomerApplicationRuleTest {
 
         ErrorDtoConverter errorConverter = new ErrorDtoConverter();
         ErrorDto expectedError = new InvalidAccountNumberFormatErrorDto(customer.getAccountNumber());
-        assertThat(response.getStatusCode()).isEqualTo(400);
+        assertThat(response.getStatusCode()).isEqualTo(BAD_REQUEST);
         assertThat(response.getBody()).isEqualToIgnoringWhitespace(errorConverter.toJson(expectedError));
     }
 
+    @Test
+    public void shouldReturnErrorIfCreatedCustomerAlreadyExists() {
+        CustomerDtoConverter customerConverter = new CustomerDtoConverter();
+        CustomerDto customer = new StubbedCustomerDto1();
+        String url = buildCustomersUrl();
 
-    private void getTestAccountNumberErrorDto(AbstractAccountNumberErrorDto errorDto) {
+        Response response = client.post(url, customerConverter.toJson(customer));
+
+        ErrorDtoConverter errorConverter = new ErrorDtoConverter();
+        ErrorDto expectedError = new CustomerAlreadyExistsErrorDto(customer.getAccountNumber());
+        assertThat(response.getStatusCode()).isEqualTo(CONFLICT);
+        assertThat(response.getBody()).isEqualToIgnoringWhitespace(errorConverter.toJson(expectedError));
+    }
+
+    private void testAccountNumberErrorDto(AbstractAccountNumberErrorDto errorDto) {
         String url = buildGetCustomerUrl(errorDto.getAccountNumber());
 
         Response response = client.get(url);

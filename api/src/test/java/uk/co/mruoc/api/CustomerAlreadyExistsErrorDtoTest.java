@@ -4,23 +4,23 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomerNotFoundErrorDtoTest {
+public class CustomerAlreadyExistsErrorDtoTest {
 
-    private static final int NOT_FOUND = 404;
+    private static final int CONFLICT = 409;
     private static final String ACCOUNT_NUMBER = "9999999999";
 
-    private final CustomerNotFoundErrorDto error = new CustomerNotFoundErrorDto(ACCOUNT_NUMBER);
+    private final CustomerAlreadyExistsErrorDto error = new CustomerAlreadyExistsErrorDto(ACCOUNT_NUMBER);
 
     @Test
     public void shouldReturnMessage() {
-        String expectedMessage = String.format("customer with account number %s not found", ACCOUNT_NUMBER);
+        String expectedMessage = String.format("customer with account number %s already exists", ACCOUNT_NUMBER);
 
         assertThat(error.getMessage()).isEqualTo(expectedMessage);
     }
 
     @Test
     public void shouldReturnNotFoundStatusCode() {
-        assertThat(error.getStatusCode()).isEqualTo(NOT_FOUND);
+        assertThat(error.getStatusCode()).isEqualTo(CONFLICT);
     }
 
     @Test

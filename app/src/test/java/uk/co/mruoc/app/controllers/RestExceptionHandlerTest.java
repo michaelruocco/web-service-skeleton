@@ -1,6 +1,7 @@
 package uk.co.mruoc.app.controllers;
 
 import org.junit.Test;
+import uk.co.mruoc.app.model.CustomerAlreadyExistsException;
 import uk.co.mruoc.app.model.CustomerNotFoundException;
 
 import javax.validation.ConstraintViolationException;
@@ -17,6 +18,17 @@ public class RestExceptionHandlerTest {
         String accountNumber = "999999999";
         String expectedMessage = String.format("customer with account number %s not found", accountNumber);
         CustomerNotFoundException cause = new CustomerNotFoundException(accountNumber);
+
+        ErrorResponse response = handler.handle(cause);
+
+        assertThat(response.getMessage()).isEqualTo(expectedMessage);
+    }
+
+    @Test
+    public void shouldHandleCustomerAlreadyExistsException() {
+        String accountNumber = "999999999";
+        String expectedMessage = String.format("customer with account number %s already exists", accountNumber);
+        CustomerAlreadyExistsException cause = new CustomerAlreadyExistsException(accountNumber);
 
         ErrorResponse response = handler.handle(cause);
 

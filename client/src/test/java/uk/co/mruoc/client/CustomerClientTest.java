@@ -64,7 +64,7 @@ public class CustomerClientTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfCreateCustomerFails() {
+    public void shouldThrowExceptionIfCreateCustomerHasBadRequest() {
         CustomerDto customer = new StubbedCreateFailureCustomerDto();
 
         Throwable thrown = catchThrowable(() -> client.createCustomer(customer));
@@ -72,6 +72,17 @@ public class CustomerClientTest {
         assertThat(thrown).isInstanceOf(CustomerClientException.class)
                 .hasNoCause()
                 .hasMessage("invalid account number, should be 10 digit numeric: 222abc");
+    }
+
+    @Test
+    public void shouldThrowExceptionIfCreateCustomerAlreadyExists() {
+        CustomerDto customer = new StubbedCustomerDto1();
+
+        Throwable thrown = catchThrowable(() -> client.createCustomer(customer));
+
+        assertThat(thrown).isInstanceOf(CustomerClientException.class)
+                .hasNoCause()
+                .hasMessage("customer with account number 1111111111 already exists");
     }
 
 }

@@ -3,8 +3,10 @@ package uk.co.mruoc.mock;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import uk.co.mruoc.api.AbstractAccountNumberErrorDto;
+import uk.co.mruoc.api.CustomerAlreadyExistsErrorDto;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
+import uk.co.mruoc.api.ErrorDto;
 import uk.co.mruoc.api.ErrorDtoConverter;
 import uk.co.mruoc.api.InvalidAccountNumberFormatErrorDto;
 import uk.co.mruoc.api.examples.StubbedCreateCustomerDto;
@@ -35,7 +37,8 @@ public class FakeCustomerApplication implements AutoCloseable {
     public FakeCustomerApplication(WireMockConfiguration configuration) {
         server = new WireMockServer(configuration);
 
-        stubGetFor(new StubbedCustomerDto1());
+        CustomerDto stubbedCustomer1 = new StubbedCustomerDto1();
+        stubGetFor(stubbedCustomer1);
 
         stubGetError(new StubbedCustomerNotFoundErrorDto1());
         stubGetError(new StubbedNonNumericAccountNumberErrorDto());
@@ -44,7 +47,10 @@ public class FakeCustomerApplication implements AutoCloseable {
 
         stubPostFor(new StubbedCreateCustomerDto());
 
-        stubPostError(new StubbedCreateFailureCustomerDto());
+        CustomerDto createFailureDto = new StubbedCreateFailureCustomerDto();
+        stubPostError(createFailureDto, new InvalidAccountNumberFormatErrorDto(createFailureDto.getAccountNumber()));
+
+        stubPostError(stubbedCustomer1, new CustomerAlreadyExistsErrorDto(stubbedCustomer1.getAccountNumber()));
     }
 
     public int getPort() {
@@ -80,10 +86,9 @@ public class FakeCustomerApplication implements AutoCloseable {
                         .withBody(body)));
     }
 
-    private void stubPostError(CustomerDto customer) {
+    private void stubPostError(CustomerDto customer, ErrorDto error) {
         String url = buildUrl();
         String body = customerConverter.toJson(customer);
-        AbstractAccountNumberErrorDto error = new InvalidAccountNumberFormatErrorDto(customer.getAccountNumber());
         server.stubFor(post(urlEqualTo(url))
                 .withRequestBody(equalToJson(body))
                 .willReturn(aResponse()
