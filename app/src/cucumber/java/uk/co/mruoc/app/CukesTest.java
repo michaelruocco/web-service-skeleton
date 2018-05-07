@@ -7,7 +7,6 @@ import lv.ctco.cukes.http.facade.HttpRequestFacade;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.co.mruoc.app.mongo.FakeMongo;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

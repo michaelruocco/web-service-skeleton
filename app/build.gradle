@@ -24,7 +24,6 @@ dependencies {
     compile 'org.modelmapper:modelmapper:1.1.0'
 
     testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1'
 
     integrationTestCompile 'org.springframework.boot:spring-boot-starter-test:2.0.1.RELEASE'
     integrationTestCompile 'com.github.michaelruocco:file-loader:3.0.3'
@@ -32,7 +31,7 @@ dependencies {
     cucumberCompile 'org.springframework.boot:spring-boot-starter-test'
     cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.21'
     cucumberCompile 'info.cukes:cucumber-spring:1.2.5'
-    //cucumberCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1'
+    cucumberCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1'
 }
 
 cucumber {

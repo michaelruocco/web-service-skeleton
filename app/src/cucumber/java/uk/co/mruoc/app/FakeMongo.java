@@ -1,4 +1,4 @@
-package uk.co.mruoc.app.mongo;
+package uk.co.mruoc.app;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -27,7 +27,7 @@ public class FakeMongo {
 
             IMongodConfig mongodConfig = new MongodConfigBuilder()
                     .version(Version.Main.PRODUCTION)
-                    .net(new Net("localhost", 27017, Network.localhostIsIPv6()))
+                    .net(new Net("localhost", port, Network.localhostIsIPv6()))
                     .build();
 
             mongodExecutable = starter.prepare(mongodConfig);
