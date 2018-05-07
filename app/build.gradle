@@ -1,14 +1,18 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
 plugins {
     id 'org.springframework.boot' version '2.0.1.RELEASE'
     id 'com.github.samueltbrown.cucumber' version '0.9'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'org.unbroken-dome.test-sets' version '1.4.5'
+    id 'com.bmuschko.docker-remote-api' version '3.2.8'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 testSets {
@@ -55,4 +59,9 @@ cucumber {
             environment key, value
         }
     }
+}
+
+task dockerBuildImage(type: DockerBuildImage) {
+    inputDir = file('.')
+    tag = 'skeleton-app:latest'
 }

@@ -1,5 +1,7 @@
 FROM anapsix/alpine-java
 
+MAINTAINER michaelruocco
+
 ADD build/libs/app*.jar /opt/app.jar
 
 ENV SERVER_PORT 8080
