@@ -26,15 +26,33 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.18.3'
 
     integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
+    integrationTestCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.3'
     integrationTestCompile 'com.github.michaelruocco:file-loader:3.0.3'
 
     cucumberCompile 'org.springframework.boot:spring-boot-starter-test'
+    cucumberCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.3'
     cucumberCompile 'lv.ctco.cukes:cukes-rest:0.0.21'
     cucumberCompile 'info.cukes:cucumber-spring:1.2.5'
-    cucumberCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.3'
+}
+
+def environmentVariables = [:]
+environmentVariables['SERVER_PORT'] = 8095
+environmentVariables['MONGO_DATABASE'] = 'skeleton_db'
+environmentVariables['MONGO_HOST'] = 'localhost'
+environmentVariables['MONGO_PORT'] = 27017
+
+integrationTest.doFirst {
+    environmentVariables.each{ key, value ->
+        environment key, value
+    }
 }
 
 cucumber {
     glueDirs = ['lv.ctco.cukes']
     featureDirs = ['src/cucumber/resources/features']
+    jvmOptions {
+        environmentVariables.each{ key, value ->
+            environment key, value
+        }
+    }
 }

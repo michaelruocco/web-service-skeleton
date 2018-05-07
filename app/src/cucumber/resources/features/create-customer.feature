@@ -5,4 +5,4 @@ Feature: Create Customer
     And content type is "application/json"
     When the client performs POST request on "/customers"
     Then status code is 201
-    And header "Location" contains "http://localhost:8092/customers/22222222"
+    And header "Location" contains "/customers/22222222"

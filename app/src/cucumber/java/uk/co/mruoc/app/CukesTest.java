@@ -1,9 +1,11 @@
 package uk.co.mruoc.app;
 
 import cucumber.api.CucumberOptions;
+import cucumber.api.java.en.Then;
 import cucumber.api.junit.Cucumber;
 import lv.ctco.cukes.core.extension.CukesPlugin;
 import lv.ctco.cukes.http.facade.HttpRequestFacade;
+import lv.ctco.cukes.http.facade.HttpResponseFacade;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,22 +22,21 @@ import java.util.Optional;
 @Singleton
 public class CukesTest implements CukesPlugin {
 
-    private static final int APPLICATION_PORT = 8092;
+    private static final String SERVER_PORT_NAME = "SERVER_PORT";
     private static final Logger LOGGER = LoggerFactory.getLogger(CukesTest.class);
-
-    private final FakeMongo fakeMongo = new FakeMongo();
 
     private String baseUri;
     private HttpRequestFacade requestFacade;
+    private HttpResponseFacade responseFacade;
 
     @Inject
-    public CukesTest(HttpRequestFacade requestFacade) {
+    public CukesTest(HttpRequestFacade requestFacade, HttpResponseFacade responseFacade) {
+        this.requestFacade = requestFacade;
         this.requestFacade = requestFacade;
     }
 
     @Override
     public void beforeAllTests() {
-        fakeMongo.start();
         if (baseUri == null) {
             baseUri = initialise();
         }
@@ -43,7 +44,7 @@ public class CukesTest implements CukesPlugin {
 
     @Override
     public void afterAllTests() {
-        fakeMongo.stop();
+        // intentionally blank
     }
 
     @Override
@@ -66,13 +67,18 @@ public class CukesTest implements CukesPlugin {
     }
 
     private String startApplication() {
-        return startApplication(APPLICATION_PORT);
+        int serverPort = getServerPort();
+        return startApplication(serverPort);
     }
 
     private String startApplication(int port) {
         LOGGER.info(String.format("starting application on port %d", port));
         Application.main(new String[] {String.format("--server.port=%d", port)});
         return String.format("http://localhost:%d", port);
+    }
+
+    private static int getServerPort() {
+        return Integer.parseInt(System.getenv(SERVER_PORT_NAME));
     }
 
 }
