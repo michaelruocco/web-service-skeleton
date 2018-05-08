@@ -4,5 +4,6 @@ include 'api'
 include 'client'
 include 'mock'
 include 'app'
+include 'test-data'
 
 

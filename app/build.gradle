@@ -6,6 +6,7 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'org.unbroken-dome.test-sets' version '1.4.5'
     id 'com.bmuschko.docker-remote-api' version '3.2.8'
+    id 'com.avast.gradle.docker-compose' version '0.7.1'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -51,17 +52,17 @@ integrationTest.doFirst {
     }
 }
 
-cucumber {
-    glueDirs = ['lv.ctco.cukes']
-    featureDirs = ['src/cucumber/resources/features']
-    jvmOptions {
-        environmentVariables.each{ key, value ->
-            environment key, value
-        }
-    }
-}
-
 task dockerBuildImage(type: DockerBuildImage) {
     inputDir = file('.')
     tag = 'skeleton-app:latest'
 }
+
+cucumber {
+    glueDirs = ['lv.ctco.cukes']
+    featureDirs = ['src/cucumber/resources/features']
+    jvmOptions {
+        environment 'BASE_URI', 'http://localhost:8095'
+    }
+}
+
+dockerCompose.isRequiredBy(project(':app').tasks.cucumber)

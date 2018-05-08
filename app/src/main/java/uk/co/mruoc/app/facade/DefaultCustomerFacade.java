@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.CustomerDtoConverter;
-import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.app.model.Customer;
 import uk.co.mruoc.app.model.CustomerAlreadyExistsException;
 import uk.co.mruoc.app.model.CustomerConverter;
@@ -30,7 +29,6 @@ public class DefaultCustomerFacade implements CustomerFacade {
     public DefaultCustomerFacade(CustomerRepository repository, CustomerConverter modelConverter) {
         this.repository = repository;
         this.modelConverter = modelConverter;
-        setUpTestData();
     }
 
     @Override
@@ -62,14 +60,6 @@ public class DefaultCustomerFacade implements CustomerFacade {
         Customer customerToCreate = modelConverter.toModel(dto);
         Customer createdCustomer = repository.create(customerToCreate);
         return modelConverter.toDto(createdCustomer);
-    }
-
-    //TODO remove once cucumber tests can create customers when post endpoint is implemented
-    private void setUpTestData() {
-        CustomerDto customer = new StubbedCustomerDto1();
-        if (!repository.exists(customer.getAccountNumber())) {
-            repository.create(modelConverter.toModel(customer));
-        }
     }
 
 }

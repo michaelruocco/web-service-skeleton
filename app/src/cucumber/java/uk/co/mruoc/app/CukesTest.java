@@ -1,11 +1,9 @@
 package uk.co.mruoc.app;
 
 import cucumber.api.CucumberOptions;
-import cucumber.api.java.en.Then;
 import cucumber.api.junit.Cucumber;
 import lv.ctco.cukes.core.extension.CukesPlugin;
 import lv.ctco.cukes.http.facade.HttpRequestFacade;
-import lv.ctco.cukes.http.facade.HttpResponseFacade;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +20,13 @@ import java.util.Optional;
 @Singleton
 public class CukesTest implements CukesPlugin {
 
-    private static final String SERVER_PORT_NAME = "SERVER_PORT";
     private static final Logger LOGGER = LoggerFactory.getLogger(CukesTest.class);
 
     private String baseUri;
     private HttpRequestFacade requestFacade;
-    private HttpResponseFacade responseFacade;
 
     @Inject
-    public CukesTest(HttpRequestFacade requestFacade, HttpResponseFacade responseFacade) {
-        this.requestFacade = requestFacade;
+    public CukesTest(HttpRequestFacade requestFacade) {
         this.requestFacade = requestFacade;
     }
 
@@ -59,11 +54,12 @@ public class CukesTest implements CukesPlugin {
     }
 
     private String initialise() {
-        return getProvidedBaseUrl().orElse(startApplication());
+        Optional<String> baseUri = getProvidedBaseUri();
+        return baseUri.orElseGet(this::startApplication);
     }
 
-    private Optional<String> getProvidedBaseUrl() {
-        return Optional.ofNullable(System.getProperty("baseUri"));
+    private Optional<String> getProvidedBaseUri() {
+        return Optional.ofNullable(System.getenv("BASE_URI"));
     }
 
     private String startApplication() {
@@ -78,7 +74,7 @@ public class CukesTest implements CukesPlugin {
     }
 
     private static int getServerPort() {
-        return Integer.parseInt(System.getenv(SERVER_PORT_NAME));
+        return Integer.parseInt(System.getenv("SERVER_PORT"));
     }
 
 }

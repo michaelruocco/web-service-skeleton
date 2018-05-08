@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "1111111111",
+    "firstName": "Joe",
+    "lastName": "Bloggs",
+    "addresses": [
+      {
+        "line1": "20 Seasame Street",
+        "line2": "",
+        "town": "Northampton",
+        "county": "Northamptonshire",
+        "postcode": "NN4 0TK",
+        "country": "GBR",
+        "_class" : "uk.co.mruoc.app.mongo.MongoAddress"
+      }
+    ],
+    "_class" : "uk.co.mruoc.app.mongo.MongoCustomer"
+  },
+  {
+    "_id": "1111111112",
+    "firstName": "Dave",
+    "lastName": "Roberts",
+    "addresses": [
+      {
+        "line1": "10 Clarence Avenue",
+        "line2": "",
+        "town": "Northampton",
+        "county": "Northamptonshire",
+        "postcode": "NN2 6LS",
+        "country": "GBR",
+        "_class" : "uk.co.mruoc.app.mongo.MongoAddress"
+      }
+    ],
+    "_class" : "uk.co.mruoc.app.mongo.MongoCustomer"
+  }
+]
