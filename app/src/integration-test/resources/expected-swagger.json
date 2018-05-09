@@ -139,33 +139,27 @@
       "properties": {
         "country": {
           "type": "string",
-          "example": "GBR",
-          "allowEmptyValue": false
+          "example": "GBR"
         },
         "county": {
           "type": "string",
-          "example": "Northamptonshire",
-          "allowEmptyValue": false
+          "example": "Northamptonshire"
         },
         "line1": {
           "type": "string",
-          "example": "20 Seasame Street",
-          "allowEmptyValue": false
+          "example": "20 Seasame Street"
         },
         "line2": {
           "type": "string",
-          "example": "My district",
-          "allowEmptyValue": false
+          "example": "My district"
         },
         "postcode": {
           "type": "string",
-          "example": "NN4 0TJ",
-          "allowEmptyValue": false
+          "example": "NN4 0TJ"
         },
         "town": {
           "type": "string",
-          "example": "Northampton",
-          "allowEmptyValue": false
+          "example": "Northampton"
         }
       },
       "title": "AddressDto"
@@ -175,8 +169,7 @@
       "properties": {
         "accountNumber": {
           "type": "string",
-          "example": 1111111111,
-          "allowEmptyValue": false
+          "example": 1111111111
         },
         "addresses": {
           "type": "array",
@@ -186,13 +179,11 @@
         },
         "firstName": {
           "type": "string",
-          "example": "Joe",
-          "allowEmptyValue": false
+          "example": "Joe"
         },
         "lastName": {
           "type": "string",
-          "example": "Bloggs",
-          "allowEmptyValue": false
+          "example": "Bloggs"
         }
       },
       "title": "CustomerDto"
@@ -202,14 +193,12 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "error message",
-          "allowEmptyValue": false
+          "example": "error message"
         },
         "statusCode": {
           "type": "integer",
           "format": "int32",
-          "example": 400,
-          "allowEmptyValue": false
+          "example": 400
         }
       },
       "title": "CustomerNotFoundErrorDto"
@@ -219,14 +208,12 @@
       "properties": {
         "message": {
           "type": "string",
-          "example": "error message",
-          "allowEmptyValue": false
+          "example": "error message"
         },
         "statusCode": {
           "type": "integer",
           "format": "int32",
-          "example": 400,
-          "allowEmptyValue": false
+          "example": 400
         }
       },
       "title": "ErrorDto"

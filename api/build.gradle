@@ -1,7 +1,7 @@
 dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.5'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.5'
-    compile 'io.swagger:swagger-annotations:1.5.18'
+    compile 'io.swagger:swagger-annotations:1.5.19'
     compile 'javax.validation:validation-api:2.0.1.Final'
 
     testCompile 'com.github.michaelruocco:file-loader:3.0.3'
