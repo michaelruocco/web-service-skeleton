@@ -5,10 +5,10 @@ import uk.co.mruoc.api.CustomerDto;
 import uk.co.mruoc.api.examples.StubbedCustomerDto1;
 import uk.co.mruoc.app.model.Customer;
 import uk.co.mruoc.app.model.CustomerAlreadyExistsException;
-import uk.co.mruoc.app.model.CustomerAssert;
+import uk.co.mruoc.app.CustomerAssert;
 import uk.co.mruoc.app.model.FakeCustomerRepository;
+import uk.co.mruoc.app.model.StubbedCustomer;
 import uk.co.mruoc.app.mongo.MongoCustomerConverter;
-import uk.co.mruoc.app.mongo.StubbedMongoCustomer;
 
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ public class DefaultCustomerFacadeTest {
 
     @Test
     public void shouldReturnStubbedCustomer() {
-        repository.setCustomerToFind(new StubbedMongoCustomer());
+        repository.setCustomerToFind(new StubbedCustomer());
 
         Optional<CustomerDto> returnedCustomer = facade.getCustomer(customer.getAccountNumber());
 
@@ -43,7 +43,7 @@ public class DefaultCustomerFacadeTest {
 
     @Test
     public void shouldThrowExceptionIfCustomerAlreadyExists() {
-        repository.setCustomerToFind(new StubbedMongoCustomer());
+        repository.setCustomerToFind(new StubbedCustomer());
 
         Throwable thrown = catchThrowable(() -> facade.createCustomer(customer));
 

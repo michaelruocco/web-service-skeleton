@@ -33,13 +33,11 @@ subprojects {
     }
 }
 
-// exclude test-data from aggregate coverage report as it has no tests
-def coverageProjects = subprojects.findAll { it.path != ':test-data' }
 task jacocoRootReport(type: JacocoReport) {
-    dependsOn = coverageProjects.test
-    sourceDirectories = files(coverageProjects.sourceSets.main.allSource.srcDirs)
-    classDirectories =  files(coverageProjects.sourceSets.main.output)
-    executionData = files(coverageProjects.jacocoTestReport.executionData)
+    dependsOn = subprojects.test
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
     reports {
         html.enabled = true
         xml.enabled = true

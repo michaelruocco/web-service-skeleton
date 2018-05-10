@@ -6,8 +6,8 @@ services:
     container_name: skeleton-db
 
   skeleton-test-data:
-    image: skeleton-test-data
-    container_name: skeleton-test-data
+    image: skeleton-mongo-test-data
+    container_name: skeleton-mongo-test-data
     environment:
       - MONGO_HOST=skeleton-db
       - MONGO_PORT=27017
