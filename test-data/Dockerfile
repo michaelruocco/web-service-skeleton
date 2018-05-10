@@ -1,7 +1,6 @@
 FROM alpine:edge
 
-RUN \
-apk add --no-cache mongodb-tools
+RUN apk add --no-cache mongodb-tools
 
 COPY init.json /init.json
 
